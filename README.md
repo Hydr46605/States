@@ -1,4 +1,3 @@
-```
 # States Plugin
 
 Il plugin States per Minecraft consente ai giocatori di creare e gestire stati all'interno del mondo di gioco.
@@ -44,4 +43,3 @@ Siete invitati a contribuire al miglioramento di questo plugin attraverso segnal
 ## Licenza
 
 Questo progetto è concesso in licenza con la licenza [MIT](#).
-```
