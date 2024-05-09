@@ -295,7 +295,7 @@ public class States extends JavaPlugin {
     }
 
     /**
-     * Changelog:
+     * Changelog v1.0.1:
      * - Aggiunti comandi /states info per ottenere informazioni su uno stato o un giocatore
      * - Migliorata la gestione dei messaggi di errore e delle informazioni visualizzate ai giocatori
      * - Aggiornato il sistema di tab completion per i comandi del plugin
