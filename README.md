@@ -1,6 +1,6 @@
 # States Plugin
 
-Il plugin States per Minecraft consente ai giocatori di creare e gestire stati all'interno del mondo di gioco.
+Il plugin States consente ai giocatori di creare stati o meglio chiamate zone private.
 
 ## Caratteristiche
 
@@ -11,7 +11,7 @@ Il plugin States per Minecraft consente ai giocatori di creare e gestire stati a
 
 ## Installazione
 
-1. Scarica l'ultima versione del plugin dal [link alle Releases](#).
+1. Scarica l'ultima versione del plugin dal [Releases](#).
 2. Trascina il file JAR scaricato nella cartella `plugins` del tuo server Minecraft.
 3. Riavvia il server Minecraft.
 
@@ -34,7 +34,7 @@ roles:
 
 ## Autori
 
-- [Il Tuo Nome](#) - Sviluppatore principale
+- [Hydr4](https://hydr4.rf.gd) - Sviluppatore principale
 
 ## Contributi
 
