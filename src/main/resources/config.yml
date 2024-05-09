@@ -1,0 +1,4 @@
+roles:
+  leader: "&aLeader"
+  member: "&eMember"
+  visitor: "&7Visitor"

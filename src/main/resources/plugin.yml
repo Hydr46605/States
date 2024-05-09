@@ -1,0 +1,11 @@
+name: States
+version: '${project.version}'
+main: org.hydr4.states.States
+api-version: '1.20'
+commands:
+  states:
+    description: Comando principale per il plugin States.
+    usage: /<command> <create|trust|info>
+    aliases: [state]
+    permission: states.use
+    permission-message: &cNon hai il permesso di utilizzare questo comando.
