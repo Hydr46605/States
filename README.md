@@ -11,7 +11,7 @@ Il plugin States consente ai giocatori di creare stati o meglio chiamate zone pr
 
 ## Installazione
 
-1. Scarica l'ultima versione del plugin dal [Releases](#).
+1. Scarica l'ultima versione del plugin dal [Releases](https://github.com/Hydr46605/States/releases).
 2. Trascina il file JAR scaricato nella cartella `plugins` del tuo server Minecraft.
 3. Riavvia il server Minecraft.
 
