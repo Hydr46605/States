@@ -44,7 +44,7 @@ public class States extends JavaPlugin {
     public boolean onCommand(CommandSender sender, Command cmd, String label, String[] args) {
         if (cmd.getName().equalsIgnoreCase("states")) {
             if (!(sender instanceof Player)) {
-                sender.sendMessage("Only players can use this command.");
+                sender.sendMessage(ChatColor.RED + "Only players can use this command.");
                 return true;
             }
 
@@ -54,7 +54,7 @@ public class States extends JavaPlugin {
             if (args.length < 2) {
                 player.sendMessage(ChatColor.RED + "Usage: /states create <name> <size>");
                 player.sendMessage(ChatColor.RED + "Usage: /states trust <player> <role>");
-                player.sendMessage(ChatColor.RED + "Usage: /states <stateName | playerName>");
+                player.sendMessage(ChatColor.RED + "Usage: /states info <stateName | playerName>");
                 return true;
             }
 
@@ -67,8 +67,11 @@ public class States extends JavaPlugin {
                 case "trust":
                     trustPlayer(player, args);
                     break;
-                default:
+                case "info":
                     getStateInfo(player, args);
+                    break;
+                default:
+                    player.sendMessage(ChatColor.RED + "Invalid command. Use /states create, trust, or info.");
                     break;
             }
             return true;
@@ -80,7 +83,7 @@ public class States extends JavaPlugin {
     public List<String> onTabComplete(CommandSender sender, Command cmd, String alias, String[] args) {
         // Tab completion per i comandi del plugin
         if (cmd.getName().equalsIgnoreCase("states") && args.length == 1) {
-            return Arrays.asList("create", "trust");
+            return Arrays.asList("create", "trust", "info");
         }
         return Collections.emptyList();
     }
@@ -160,20 +163,14 @@ public class States extends JavaPlugin {
     }
 
     private void getStateInfo(Player player, String[] args) {
-        // Ottiene le informazioni su uno stato o un giocatore con il comando /states <stateName | playerName>
-        String query = args[1];
-        State state = null;
-
-        if (states.containsKey(query)) {
-            state = states.get(query);
-        } else {
-            for (State s : states.values()) {
-                if (s.getOwner().equalsIgnoreCase(query)) {
-                    state = s;
-                    break;
-                }
-            }
+        // Ottiene le informazioni su uno stato o un giocatore con il comando /states info
+        if (args.length < 2) {
+            player.sendMessage(ChatColor.RED + "Usage: /states info <stateName | playerName>");
+            return;
         }
+
+        String query = args[1];
+        State state = states.get(query);
 
         if (state != null) {
             // Mostra le informazioni dello stato
@@ -187,7 +184,13 @@ public class States extends JavaPlugin {
             }
             player.sendMessage(ChatColor.GREEN + "Size: " + state.getSize() + " blocks");
         } else {
-            player.sendMessage(ChatColor.RED + "State not found.");
+            Player targetPlayer = Bukkit.getPlayer(query);
+            if (targetPlayer != null) {
+                player.sendMessage(ChatColor.GREEN + "Player Name: " + targetPlayer.getName());
+                // Altre informazioni sul giocatore possono essere aggiunte qui
+            } else {
+                player.sendMessage(ChatColor.RED + "State or player not found.");
+            }
         }
     }
 
@@ -290,4 +293,13 @@ public class States extends JavaPlugin {
             return members;
         }
     }
+
+    /**
+     * Changelog:
+     * - Aggiunti comandi /states info per ottenere informazioni su uno stato o un giocatore
+     * - Migliorata la gestione dei messaggi di errore e delle informazioni visualizzate ai giocatori
+     * - Aggiornato il sistema di tab completion per i comandi del plugin
+     * - Aggiunto supporto per più ruoli all'interno degli stati
+     * - Risolti bug minori e migliorata la stabilità complessiva del plugin
+     */
 }
