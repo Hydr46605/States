@@ -29,6 +29,8 @@ public class States extends JavaPlugin {
         // Carica gli stati dal file saves.yml
         loadStatesFromConfig();
 
+        saveDefaultConfig();
+
         getLogger().info("States plugin enabled.");
     }
 
@@ -137,10 +139,10 @@ public class States extends JavaPlugin {
         }
 
         String playerName = args[1];
-        String role = args[2];
+        String roleName = args[2];
 
         // Verifica se il ruolo specificato è valido
-        if (!config.contains("roles." + role)) {
+        if (!config.contains("roles." + roleName)) {
             player.sendMessage(ChatColor.RED + "Invalid role specified.");
             return;
         }
@@ -155,8 +157,8 @@ public class States extends JavaPlugin {
         String stateName = player.getWorld().getName(); // Assumendo che ogni mondo abbia il proprio stato
         State state = states.get(stateName);
         if (state != null) {
-            state.addMember(playerName, role, targetPlayer.getLocation());
-            player.sendMessage(ChatColor.GREEN + "Player " + playerName + " trusted with role " + role + ".");
+            state.addMember(playerName, roleName, targetPlayer.getLocation());
+            player.sendMessage(ChatColor.GREEN + "Player " + playerName + " trusted with role " + roleName + ".");
         } else {
             player.sendMessage(ChatColor.RED + "You are not in any state.");
         }
@@ -179,8 +181,8 @@ public class States extends JavaPlugin {
             player.sendMessage(ChatColor.GREEN + "Members: ");
             for (Map.Entry<String, String> entry : state.getMembers().entrySet()) {
                 String playerName = entry.getKey();
-                String role = entry.getValue().split(";")[0];
-                player.sendMessage(ChatColor.YELLOW + "- " + playerName + " (" + role + ")");
+                String roleName = entry.getValue().split(";")[0]; // Ottieni il ruolo dal valore memorizzato
+                player.sendMessage(ChatColor.YELLOW + "- " + playerName + " (" + roleName + ")");
             }
             player.sendMessage(ChatColor.GREEN + "Size: " + state.getSize() + " blocks");
         } else {
@@ -250,9 +252,9 @@ public class States extends JavaPlugin {
             this.members = new HashMap<>();
         }
 
-        public void addMember(String playerName, String role, Location position) {
+        public void addMember(String playerName, String roleName, Location position) {
             // Aggiunge un nuovo membro allo stato
-            members.put(playerName, role + ";" + position.getX() + "," + position.getY() + "," + position.getZ());
+            members.put(playerName, roleName + ";" + position.getX() + "," + position.getY() + "," + position.getZ());
             saveState();
         }
 
@@ -295,11 +297,11 @@ public class States extends JavaPlugin {
     }
 
     /**
-     * Changelog v1.0.1:
-     * - Aggiunti comandi /states info per ottenere informazioni su uno stato o un giocatore
-     * - Migliorata la gestione dei messaggi di errore e delle informazioni visualizzate ai giocatori
-     * - Aggiornato il sistema di tab completion per i comandi del plugin
-     * - Aggiunto supporto per più ruoli all'interno degli stati
-     * - Risolti bug minori e migliorata la stabilità complessiva del plugin
+     * Changelog v1.1.0:
+     * - Aggiunta funzionalità di ruolo per i membri degli stati
+     * - Aggiornati i comandi /states create e /states trust per supportare i ruoli
+     * - Modificato il formato di memorizzazione dei membri degli stati per includere i ruoli
+     * - Aggiornato il metodo getStateInfo per visualizzare correttamente i ruoli dei membri degli stati
+     * - Incrementato il numero di versione del plugin a 1.1.0
      */
 }
