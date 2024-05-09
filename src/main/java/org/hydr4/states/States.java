@@ -302,6 +302,5 @@ public class States extends JavaPlugin {
      * - Aggiornati i comandi /states create e /states trust per supportare i ruoli
      * - Modificato il formato di memorizzazione dei membri degli stati per includere i ruoli
      * - Aggiornato il metodo getStateInfo per visualizzare correttamente i ruoli dei membri degli stati
-     * - Incrementato il numero di versione del plugin a 1.1.0
      */
 }
