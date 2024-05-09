@@ -5,7 +5,10 @@ import org.bukkit.command.*;
 import org.bukkit.configuration.*;
 import org.bukkit.configuration.file.*;
 import org.bukkit.entity.*;
+import org.bukkit.event.EventHandler;
+import org.bukkit.event.player.PlayerMoveEvent;
 import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.scheduler.BukkitRunnable;
 
 import java.io.*;
 import java.util.*;
@@ -25,6 +28,8 @@ public class States extends JavaPlugin {
         // Carica i file di configurazione
         savesConfig = loadConfigFile(savesFile);
         config = getConfig();
+
+        getServer().getPluginManager().registerEvents(this, this);
 
         // Carica gli stati dal file saves.yml
         loadStatesFromConfig();
@@ -79,6 +84,33 @@ public class States extends JavaPlugin {
             return true;
         }
         return false;
+    }
+
+    @EventHandler
+    public void onPlayerMove(PlayerMoveEvent event) {
+        Player player = event.getPlayer();
+        Location to = event.getTo();
+
+        // Controlla se il giocatore si è spostato in una nuova posizione
+        if (to != null && !to.equals(event.getFrom())) {
+            // Controlla se il giocatore si trova nella zona di uno stato
+            for (State state : states.values()) {
+                if (state.isInStateZone(to) && state.isTrusted(player.getName())) {
+                    // Mostra il titolo con il nome dello stato e il proprietario
+                    showStateTitle(player, state.getName(), state.getOwner());
+                    break; // Esci dal ciclo se il giocatore è già nella zona di uno stato
+                }
+            }
+        }
+    }
+
+    private void showStateTitle(Player player, String stateName, String ownerName) {
+        new BukkitRunnable() {
+            @Override
+            public void run() {
+                player.sendTitle(stateName, ownerName, 10, 70, 20);
+            }
+        }.runTaskLater(this, 20L); // 20 ticks corrispondono a 1 secondo
     }
 
     @Override
